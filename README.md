@@ -75,4 +75,4 @@ npx wrangler d1 execute rich-influencers --local --file=schema.sql
 npx wrangler dev
 ```
 
-Add your logo as `public/logo.png` (it's used in the sidebar, login and join page; the text wordmark shows until then). Brand colours are CSS variables at the top of `public/app.css`.
+Logos live in `public/` (`logo.png`, `logo-white.png`, `favicon.png`). Brand colours are CSS variables at the top of `public/app.css`.

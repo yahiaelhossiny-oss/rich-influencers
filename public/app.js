@@ -91,7 +91,7 @@ function shell(active, title, actions, content) {
 	];
 	app.innerHTML = `<div class="shell">
 		<aside class="side">
-			<div class="brand"><img src="/logo.png" alt="" onerror="this.remove()"><div><div class="wordmark">RICH</div><small>Influencer Network</small></div></div>
+			<div class="brand"><img class="logo" src="/logo-white.png" alt="RICH"><small>Influencer Network</small></div>
 			<nav class="nav">${nav.map(([k, h, l, i, b]) => `<a href="${h}" class="${k === active ? 'on' : ''}">${i}<span>${l}</span>${b ? `<span class="badge">${b}</span>` : ''}</a>`).join('')}</nav>
 			<div class="spacer"></div>
 			<div class="me"><b>${esc(state.me.name)}</b>${esc(state.me.role)} · <a id="logout">Sign out</a><br><a href="/join/" target="_blank">Open registration page ↗</a></div>
@@ -165,7 +165,7 @@ async function loadOptions(force) {
 async function authScreen() {
 	const { needed } = await api('/setup');
 	app.innerHTML = `<div class="auth"><form class="card stack" id="f">
-		<div><img src="/logo.png" alt="" style="height:32px" onerror="this.outerHTML='<div class=wordmark>RICH</div>'"></div>
+		<div><img src="/logo.png" alt="RICH" style="height:30px"></div>
 		<div><h1>${needed ? 'Create the first admin' : 'Sign in to RICH Influencers'}</h1>
 		<div class="muted">${needed ? 'This screen only appears once, before any team account exists.' : 'Team access only. Influencers register at <a href="/join/">/join</a>.'}</div></div>
 		${needed ? `<label class="f"><span>Your name</span><input type="text" name="display_name" required></label>` : ''}
@@ -624,7 +624,7 @@ function updateCard(u, withName) {
 		if (/_followers|_avg_/.test(c.field)) return fmtFull(v);
 		return esc(v);
 	};
-	return `<div class="card pad" style="margin-bottom:16px;border-color:#e7d3a8" data-update="${u.id}">
+	return `<div class="card pad" style="margin-bottom:16px;border-color:#b9dcec" data-update="${u.id}">
 		<div class="row wrap"><div style="flex:1"><b>${withName ? `<a href="#/influencer/${u.influencer_id}">${esc(u.full_name)}</a> submitted` : 'Submitted'} profile changes</b> <span class="faint small">${dateTime(u.created_at)}</span></div>
 		${canEdit() ? `<button class="btn ok sm" data-uact="approve">Approve selected</button><button class="btn bad sm" data-uact="reject">Reject all</button>` : ''}</div>
 		<table class="t diff" style="margin-top:10px"><thead><tr><th>Field</th><th>Current</th><th>New</th><th style="width:40px">Apply</th></tr></thead><tbody>
