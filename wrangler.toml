@@ -1,0 +1,28 @@
+name = "rich-influencers"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+workers_dev = true
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "rich-influencers"
+database_id = "1c527c5a-b38f-489e-b2b5-2369c131ea47"
+
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "rich-influencer-media"
+
+[vars]
+# Public base URL used in notification links and emails. Set after you attach a domain.
+APP_URL = ""
+
+# Optional secrets (set with `npx wrangler secret put NAME`):
+#   SETUP_KEY           required on the first-admin setup screen, if set
+#   NOTIFY_WEBHOOK_URL  Slack / Google Chat incoming webhook for new registrations
+#   RESEND_API_KEY      enables emails (team alerts + influencer approval / info requests)
+#   NOTIFY_EMAIL        team inbox for alerts, comma separated
+#   MAIL_FROM           verified sender, e.g. "RICH Influencers <influencers@yourdomain.ae>"
