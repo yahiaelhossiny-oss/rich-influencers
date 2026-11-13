@@ -26,3 +26,7 @@ APP_URL = ""
 #   RESEND_API_KEY      enables emails (team alerts + influencer approval / info requests)
 #   NOTIFY_EMAIL        team inbox for alerts, comma separated
 #   MAIL_FROM           verified sender, e.g. "RICH Influencers <influencers@yourdomain.ae>"
+
+# One-off: imports the web-research dataset, then becomes a no-op. Remove after it has run.
+[triggers]
+crons = ["* * * * *"]

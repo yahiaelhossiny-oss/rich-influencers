@@ -7,6 +7,7 @@ import {
 	WRITABLE, SELF_EDITABLE, REVIEW, FIELD_LABELS, TIERS, CITIES, PRICE_FIELDS, STATUSES
 } from './model.js';
 import { notify, sendEmail, esc } from './notify.js';
+import { runSeed } from './seed.js';
 
 const now = () => Date.now();
 const ROLES = ['admin', 'editor', 'viewer'];
@@ -946,6 +947,9 @@ function updateView(u, inf) {
 
 // ---------- entry ----------
 export default {
+	async scheduled(event, env, ctx) {
+		ctx.waitUntil(runSeed(env).then((r) => console.log('seed', JSON.stringify(r))).catch((e) => console.error('seed failed', e)));
+	},
 	async fetch(request, env, ctx) {
 		const url = new URL(request.url);
 		const path = url.pathname;
