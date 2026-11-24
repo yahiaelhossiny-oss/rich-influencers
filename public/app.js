@@ -245,23 +245,6 @@ async function viewDiscover() {
 			<div class="range">${inp('fmin', 'Min e.g. 80k')}${inp('fmax', 'Max e.g. 100k')}</div>
 			<div class="chips" style="margin-top:8px" data-multi="tier">${Object.entries(TIERS).map(([k, l]) => `<span class="chip ${(p.get('tier') || '').split(',').includes(k) ? 'on' : ''}" data-v="${k}">${l}</span>`).join('')}</div>
 			<div class="faint small" style="margin-top:6px">Nano &lt;10K · Micro 10–100K · Mid 100–500K · Macro 500K–1M · Celebrity 1M+</div>
-			<h3>Language</h3>${chipSet('language', mergeTop(['Arabic', 'English', 'Hindi', 'Urdu', 'French', 'Russian', 'Tagalog'], opts.languages))}
-			<h3>Gender</h3>${chipSet('gender', [['female', 'Female'], ['male', 'Male'], ['other', 'Other']])}
-			<h3>Engagement rate (%)</h3><div class="range">${inp('ermin', 'Min %')}${inp('ermax', 'Max %')}</div>
-			<h3>Avg views (min)</h3>${inp('vmin', 'e.g. 20k')}
-			<h3>Price (AED)</h3>
-			<select data-k="deliverable" style="margin-bottom:8px">
-				<option value="">Any deliverable</option>${PRICE_LABELS.map(([k, l]) => `<option value="${k.replace('price_', '')}" ${p.get('deliverable') === k.replace('price_', '') ? 'selected' : ''}>${l}</option>`).join('')}
-			</select>
-			<div class="range">${inp('pmin', 'Min')}${inp('pmax', 'Max')}</div>
-			<label class="row small" style="margin-top:8px"><input type="checkbox" data-k="has_price" ${p.get('has_price') === '1' ? 'checked' : ''}> Only with rates on file</label>
-			<details class="more" ${['nationality', 'audience', 'availability', 'has_contact', 'status'].some((k) => p.get(k)) ? 'open' : ''}><summary>More filters</summary>
-				<h3>Nationality</h3>${opts.nationalities.length ? chipSet('nationality', opts.nationalities.map((x) => [x.value, x.value, x.n])) : '<div class="faint small">None recorded yet</div>'}
-				<h3>Audience location</h3>${inp('audience', 'e.g. UAE, Saudi Arabia')}
-				<h3>Availability</h3>${chipSet('availability', Object.entries(AVAIL))}
-				<label class="row small" style="margin-top:12px"><input type="checkbox" data-k="has_contact" ${p.get('has_contact') === '1' ? 'checked' : ''}> Has email or WhatsApp</label>
-				${team ? `<h3>Record status</h3>${chipSet('status', Object.entries(STATUS).map(([k, v]) => [k, v[0]]))}<div class="faint small" style="margin-top:6px">Default shows approved only.</div>` : ''}
-			</details>
 			<button class="btn ghost" id="reset" style="width:100%;justify-content:center;margin-top:18px">Reset all filters</button>
 		</aside>
 		<section>

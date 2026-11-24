@@ -150,10 +150,6 @@ function formHtml(p, mode) {
 			<label class="f">${lbl('gender', 0, 1)}<select name="gender"><option value="">${t('choose')}</option>${['female', 'male', 'other'].map((g) => `<option value="${g}" ${p.gender === g ? 'selected' : ''}>${t(g)}</option>`).join('')}</select></label>
 			<label class="f">${lbl('nationality', 0, 1)}${inp('nationality', p.nationality)}</label>
 		</div>
-		<label class="f" style="margin-top:12px">${lbl('languages')}<div class="chips" id="langs">${LANGS.map(([en, ar]) => `<span class="chip ${langsSel.has(en) ? 'on' : ''}" data-v="${en}">${lang === 'ar' ? ar : en}</span>`).join('')}</div>
-			<input type="text" name="lang_other" value="${esc(otherLangs)}" placeholder="${t('otherLang')}" style="margin-top:8px;max-width:300px"></label>
-		<label class="f" style="margin-top:12px">${lbl('agency', 0, 1)}${inp('agency', p.agency, `placeholder="${t('agencyHint')}"`)}</label>
-
 		<div class="step"><span class="n">2</span><div><h2>${t('s2')}</h2><p>${t('s2d')}</p></div></div>
 		<div class="grid2">
 			<label class="f" data-f="primary_category">${lbl('primary', 1)}<select name="primary_category" id="primarycat"><option value="">${t('choose')}</option>${cats.map((c) => `<option value="${c.id}" ${+primary === c.id ? 'selected' : ''}>${esc(catName(c.name))}</option>`).join('')}</select></label>
@@ -195,7 +191,6 @@ function formHtml(p, mode) {
 function bindForm(form) {
 	const pick = $('#citypick', form), other = $('#cityother', form);
 	pick.onchange = () => other.classList.toggle('hidden', pick.value !== '__other');
-	$('#langs', form).onclick = (e) => { const c = e.target.closest('.chip'); if (c) c.classList.toggle('on'); };
 	$('#extracats', form).onclick = (e) => { const c = e.target.closest('.chip'); if (c) c.classList.toggle('on'); };
 	$('#primarycat', form).onchange = (e) => $$('#extracats .chip', form).forEach((c) => c.classList.toggle('hidden', c.dataset.v === e.target.value));
 	$('#photo', form).onchange = (e) => {
@@ -209,13 +204,12 @@ function bindForm(form) {
 function collect(form) {
 	const fd = new FormData(form);
 	const d = {};
-	for (const k of ['full_name', 'email', 'whatsapp', 'gender', 'nationality', 'agency', 'bio', 'content_types', 'availability',
+	for (const k of ['full_name', 'email', 'whatsapp', 'gender', 'nationality', 'bio', 'content_types', 'availability',
 		'ig_username', 'ig_followers', 'ig_er', 'ig_avg_views', 'ig_avg_likes', 'ig_avg_comments',
 		'tt_username', 'tt_followers', 'tt_er', 'tt_avg_views', 'tt_avg_likes', 'tt_avg_comments',
 		'price_ig_reel', 'price_ig_story', 'price_ig_post', 'price_ig_carousel', 'price_tt_video', 'price_tt_live', 'price_package']) d[k] = (fd.get(k) || '').toString().trim();
 	const cp = fd.get('city_pick');
 	d.city = cp === '__other' ? (fd.get('city_other') || '').toString().trim() : cp || '';
-	d.languages = [...$$('#langs .chip.on', form).map((c) => c.dataset.v), ...String(fd.get('lang_other') || '').split(',').map((s) => s.trim()).filter(Boolean)];
 	d.primary_category = +fd.get('primary_category') || null;
 	d.categories = [d.primary_category, ...$$('#extracats .chip.on:not(.hidden)', form).map((c) => +c.dataset.v)].filter(Boolean);
 	d.consent = !!fd.get('consent');
